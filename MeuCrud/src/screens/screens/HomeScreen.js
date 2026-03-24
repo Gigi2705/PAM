@@ -3,7 +3,7 @@ import { View, Text, FlatList, Button } from "react-native";
 
 import styles from "../styles/styles";
 
-import { getPeople, deletePerson } from "../servers/peopleCrud";
+import { getPeople, deletePerson } from "../services/peopleCrud";
 
 export default function HomeScreen({ navigation }) {
 
@@ -21,6 +21,42 @@ export default function HomeScreen({ navigation }) {
     loadPeople();
   }, []);
 
+  function CardPersonal ({item, navigation, refresh}){
+    return(
+
+        <View style={styles.card}>
+
+        <View>
+
+        <Text style={styles.name}>
+          {item.firstName} {item.lastName}
+        </Text>
+
+        <Text style={styles.email}>
+           {item.email}
+        </Text>
+
+      </View>
+
+      <View>
+        <Button
+          title="Editar"
+          onPress={()=> navigation.navigate("AddEdit", {person:item})}
+        />
+
+        <Button
+          title="Deletar"
+          onPress={async ()=>{
+          await deletePerson(item.id);
+          refresh();
+          }}
+        />
+
+      </View>
+    </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
 
@@ -35,7 +71,7 @@ export default function HomeScreen({ navigation }) {
         data={people}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <CardPerson
+          <CardPersonal
             item={item}
             navigation={navigation}
             refresh={loadPeople}
