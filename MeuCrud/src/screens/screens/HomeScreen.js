@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, Button } from "react-native";
+import { TextInput } from "react-native";
 
 import styles from "../styles/styles";
 
 import { getPeople, deletePerson } from "../services/peopleCrud";
+import { API_URL } from "../services/configApi";
 
 export default function HomeScreen({ navigation }) {
 
@@ -36,6 +38,10 @@ export default function HomeScreen({ navigation }) {
            {item.email}
         </Text>
 
+        <Text style={styles.phone}>
+           {item.phone}
+        </Text>
+
       </View>
 
       <View>
@@ -56,6 +62,7 @@ export default function HomeScreen({ navigation }) {
     </View>
     )
   }
+    
 
   return (
     <View style={styles.container}>
@@ -66,6 +73,7 @@ export default function HomeScreen({ navigation }) {
         title="Adicionar Pessoa"
         onPress={() => navigation.navigate("AddEdit")}
       />
+
 
       <FlatList
         data={people}
