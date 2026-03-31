@@ -34,5 +34,13 @@ export default StyleSheet.create({
     padding: 10,
     backgroundColor: "#4CAF50",
     borderRadius: 5
+  },
+
+  searchInput:{
+    backgroundColor:"#fff",
+    borderRadius:8,
+    paddingHorizontal:12,
+    paddingVertical:10,
+    marginBottom:10
   }
 });

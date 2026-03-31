@@ -5,7 +5,6 @@ import { TextInput } from "react-native";
 import styles from "../styles/styles";
 
 import { getPeople, deletePerson } from "../services/peopleCrud";
-import { API_URL } from "../services/configApi";
 
 export default function HomeScreen({ navigation }) {
 
@@ -62,6 +61,29 @@ export default function HomeScreen({ navigation }) {
     </View>
     )
   }
+
+    const [search, setSearch] = useState(""); //armazena o texto digitado na busca
+
+    const normalizedSearch = search.trim().toLowerCase(); //normaliza o texto na busca, deixa tudo muinusculo
+    // e remove espaços no começo e final
+     const filteredPeople = !normalizedSearch //cria a lista filtrada 
+    ? people //se não tiver nada digitado, retorna toda a lista
+    : people.filter((people) => { //se tiver busca, filtra a lista
+        const firstName = (people.firstName || "").toLowerCase(); 
+        const lastName = (people.lastName || "").toLowerCase(); 
+        const fullName = `${firstName} ${lastName}`.trim(); //permite buscar pelo nome completo
+        const email = (people.email || "").toLowerCase();
+        const phone = (people.phone || "").toLowerCase();
+        //pega o primeiro nome, ultimo nome, email e telefone e deixa tudo minusculo
+
+        return ( //verifica se o texto buscado está presente em algum campo
+          firstName.includes(normalizedSearch) ||
+          lastName.includes(normalizedSearch) ||
+          fullName.includes(normalizedSearch) ||
+          email.includes(normalizedSearch) ||
+          phone.includes(normalizedSearch)
+        );
+      });
     
 
   return (
@@ -74,9 +96,15 @@ export default function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate("AddEdit")}
       />
 
+      <TextInput
+      placeholder="Buscar pessoa.."
+      value={search}
+      onChangeText={setSearch}
+      style={styles.searchInput}
+      />  
 
       <FlatList
-        data={people}
+        data={filteredPeople}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <CardPersonal
