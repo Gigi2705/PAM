@@ -1,5 +1,7 @@
 # App de Cadastro e Consulta de Pessoas
 
+## Vídeo: https://youtube.com/shorts/T11B_TbgCPQ
+
 ## Descrição do projeto
 Um aplicativo mobile em React Native que permite realizar as operações do CRUD(cadastrar, editar, deletar e visualizar pessoas) de pessoas(ex.: firstName, lastName, email, phone).
 
